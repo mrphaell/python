@@ -23,6 +23,7 @@ class UserCreate(CreateAPIView):
 
 class UserList(ListAPIView):
     queryset = User.objects.all()
+    permission_classes = []
     serializer_class = UserSerializer
 
 
@@ -33,4 +34,10 @@ class UserUpdate(UpdateAPIView):
 
 class UserDelet(DestroyAPIView):
     queryset = User.objects.all()
+    permission_classes = []
     serializer_class = UserSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return 'Exluido'
